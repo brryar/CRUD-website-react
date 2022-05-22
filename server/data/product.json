@@ -1,0 +1,20 @@
+[
+  {
+    "product_name": "Samsung Type A Case",
+    "product_description": "Phone case for Samsung mobile phone type A series",
+    "product_price": 50000,
+    "unit_of_measurement": "pcs"
+  },
+  {
+    "product_name": "4K Phone Screen Guard",
+    "product_description": "Screen guard for phone with 4K screen resolution",
+    "product_price": 150000,
+    "unit_of_measurement": "sheet"
+  },
+  {
+    "product_name": "Cable Charger",
+    "product_description": "Cable charger for all types of phones",
+    "product_price": 10000,
+    "unit_of_measurement": "roll"
+  }
+]

@@ -1,11 +1,13 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { fetchProducts, fetchProductById, editProductById, deleteProduct } from "../store/actions";
 import Swal from "sweetalert2";
 
 export default function ProductList() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const products = useSelector((state) => state.products);
   const [modal, setModal] = useState(false);
   const [prodId, setProdID] = useState(1);
@@ -21,8 +23,23 @@ export default function ProductList() {
     setProdID(id);
   };
 
+  const toAddProduct = () => {
+    navigate("/add");
+  };
+
   const resetModal = () => {
     setModal(false);
+    dispatch(fetchProductById(prodId))
+      .then((response) => {
+        if (!response.ok) throw new Error(response.statusText);
+        return response.json();
+      })
+      .then((data) => {
+        setNewProduct(data);
+      })
+      .catch((error) => {
+        Swal.fire("Error!", "Something went wrong", "error");
+      });
   };
 
   const editDataProduct = (event) => {
@@ -46,7 +63,7 @@ export default function ProductList() {
         dispatch(fetchProducts());
       })
       .catch((error) => {
-        Swal.fire("error!");
+        Swal.fire("Error!", "Something went wrong", "error");
       });
   };
 
@@ -71,7 +88,7 @@ export default function ProductList() {
             dispatch(fetchProducts());
           })
           .catch((error) => {
-            Swal.fire("Error!");
+            Swal.fire("Error!", "Something went wrong", "error");
           });
       }
     });
@@ -95,8 +112,13 @@ export default function ProductList() {
   return (
     <>
       <div className="container mt-5">
-        <h5>Products List</h5>
-        <table className="table">
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h3>Edit Product</h3>
+          <button onClick={() => toAddProduct()} type="button" className="btn btn-success">
+            Add New Product
+          </button>
+        </div>
+        <table className="table mt-3">
           <thead>
             <tr>
               <th scope="col">No</th>
@@ -118,7 +140,7 @@ export default function ProductList() {
                 <td>{product.product_price}</td>
                 <td>{product.unit_of_measurement}</td>
                 <td>
-                  <button onClick={() => modalHandler(product.id)} type="button" className="btn btn-primary">
+                  <button onClick={() => modalHandler(product.id)} type="button" className="btn btn-primary me-1">
                     Edit
                   </button>
                   <button onClick={() => doDelete(product.id)} type="button" className="btn btn-danger">

@@ -33,17 +33,18 @@ export default function Form() {
         return response.json();
       })
       .then((_) => {
-        Swal.fire("Success Add Product!");
+        Swal.fire("Succes!", "New Product Added!", "success");
         navigate("/");
       })
       .catch((error) => {
-        Swal.fire("error!");
+        Swal.fire("Error!", "Please fill all form field", "error");
       });
   };
 
   return (
     <>
-      <div className="container mt-5">
+      <div className="container mt-1 w-50 p-5">
+        <h5>Add New Product</h5>
         <form onSubmit={addNewProduct}>
           <div className="form-group">
             <label for="product_name">Product Name</label>

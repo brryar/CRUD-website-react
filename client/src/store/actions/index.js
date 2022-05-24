@@ -16,7 +16,7 @@ export const fetchProducts = () => {
         });
       })
       .catch((error) => {
-        Swal.fire("error!");
+        Swal.fire("Error!", "Something went wrong", "error");
       });
   };
 };
